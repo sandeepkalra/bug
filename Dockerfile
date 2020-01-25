@@ -17,6 +17,7 @@ RUN set -eux; \
 		musl-dev \
 		openssl \
 		go \
+		vim \
 	; \
 	export \
 # set GOROOT_BOOTSTRAP such that we can actually build Go
@@ -72,6 +73,8 @@ COPY script /go/script/
 COPY test1 /go/test1/
 
 RUN cd /go/supervisord \
+	&& GOOS=linux GOARCH=amd64 go build  \
+	&& cd /go/supervisord/pidproxy \
 	&& GOOS=linux GOARCH=amd64 go build  \
 	&& cd /go/webserver \
 	&& GOOS=linux GOARCH=amd64 go build  \
